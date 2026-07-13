@@ -1,11 +1,20 @@
 ---
-name: best-practices
-description: Use when building with Medblocks, choosing SDK vs REST, handling API keys, pagination, webhook signatures, empty records, or Medblocks integration drift.
+name: medblocks
+description: Use when building with Medblocks. Covers Patient Access connection flows (hosted auth, own UI, patient sessions, return handling, connection status), FHIR records out (SDK records, /records REST fallback, pagination, Patient identifier mapping, FHIR server destinations), and integration best practices (SDK vs REST, API keys, webhook signatures, empty records, integration drift).
 ---
 
-# Medblocks Best Practices
+# Medblocks
 
-Use this as the stable integration playbook. Medblocks docs and product behavior move quickly, so verify exact request fields, filters, response fields, and examples against the latest docs and generated API reference before writing code.
+Medblocks gives applications access to a patient's longitudinal health data, with their consent, across EHRs, payer APIs, and health information networks, through a single API.
+
+This folder contains task guides alongside this file. Read the guide that matches the task before writing code:
+
+| Task | Read |
+| --- | --- |
+| Patient Access: hosted auth, own UI connection flows, patient sessions, return handling, connection status | `patient-access.md` |
+| FHIR records out: read, sync, store, or export records, pagination, Patient identifier mapping, FHIR server destinations | `export-fhir.md` |
+
+The rest of this file is the stable integration playbook that applies to every Medblocks task. Medblocks docs and product behavior move quickly, so verify exact request fields, filters, response fields, and examples against the latest docs and generated API reference before writing code.
 
 - Docs: https://medblocks.com/docs
 - API reference: https://medblocks.com/docs/reference/api

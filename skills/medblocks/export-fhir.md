@@ -1,11 +1,6 @@
----
-name: export-fhir
-description: Use when reading, syncing, storing, or exporting FHIR records from Medblocks, including SDK records, /records REST fallback, pagination, Patient identifier mapping, and FHIR server destinations.
----
-
 # Export FHIR From Medblocks
 
-Use this skill when an app needs to read, sync, store, or forward FHIR records from Medblocks. For TS/JS apps, lead with the SDK records function and verify exact filters/fields against the latest docs and API reference.
+Use this guide when an app needs to read, sync, store, or forward FHIR records from Medblocks. For TS/JS apps, lead with the SDK records function and verify exact filters/fields against the latest docs and API reference.
 
 - Data out: https://medblocks.com/docs/data-out
 - Export to FHIR server: https://medblocks.com/docs/export-to-fhir-server
@@ -128,6 +123,6 @@ Use SDK records when the app needs app-owned storage, custom transformation, imm
 
 ## Drift Boundary
 
-Update this skill when the records SDK method, `/records` fallback, pagination shape, Patient identifier rule, or recommended export path changes.
+Update this guide when the records SDK method, `/records` fallback, pagination shape, Patient identifier rule, or recommended export path changes.
 
-Do not update this skill for ordinary docs copy, new screenshots, optional filters, or expanded examples. Those belong in the docs/API reference.
+Do not update this guide for ordinary docs copy, new screenshots, optional filters, or expanded examples. Those belong in the docs/API reference.

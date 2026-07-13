@@ -1,11 +1,6 @@
----
-name: patient-access
-description: Use when adding Medblocks Patient Access, hosted auth, own UI connection flows, patient sessions, return handling, connection status, or reading records after connection.
----
-
 # Medblocks Patient Access
 
-Use this skill to plan and implement Patient Access integrations. Keep implementation grounded in the latest docs because product flows and examples may change.
+Use this guide to plan and implement Patient Access integrations. Keep implementation grounded in the latest docs because product flows and examples may change.
 
 - Patient Access docs: https://medblocks.com/docs/patient-access
 - API reference: https://medblocks.com/docs/reference/api
@@ -96,7 +91,7 @@ Records may arrive after the connection becomes active. For production record wo
 
 Use `mb.patients.records(patientId, params?)` for TS/JS app-controlled reads. Preserve pagination with `has_more`, `next_cursor`, and `starting_after`.
 
-For FHIR storage, transformation, export, and identifier mapping, use the `export-fhir` skill.
+For FHIR storage, transformation, export, and identifier mapping, read `export-fhir.md` in this folder.
 
 ## Security Checklist
 
@@ -108,6 +103,6 @@ For FHIR storage, transformation, export, and identifier mapping, use the `expor
 
 ## Drift Boundary
 
-Update this skill when Patient Access stable semantics change: session start, return verification, connected status, record-read timing, or the recommended hosted vs own-UI flow.
+Update this guide when Patient Access stable semantics change: session start, return verification, connected status, record-read timing, or the recommended hosted vs own-UI flow.
 
-Do not update this skill for every new optional parameter, screenshot, or page copy change. Link to the live docs for those.
+Do not update this guide for every new optional parameter, screenshot, or page copy change. Link to the live docs for those.

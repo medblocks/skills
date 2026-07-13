@@ -11,12 +11,10 @@
     {
       "name": "medblocks-skills",
       "description": "Teaches coding agents how to build with Medblocks using the live docs and SDK guidance.",
-      "source": "./medblocks",
+      "source": "./",
       "strict": false,
       "skills": [
-        "./best-practices",
-        "./patient-access",
-        "./export-fhir"
+        "./skills/medblocks"
       ]
     }
   ]
