@@ -1,0 +1,23 @@
+{
+  "name": "medblocks",
+  "owner": {
+    "name": "Medblocks"
+  },
+  "metadata": {
+    "description": "Medblocks skills",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "medblocks-skills",
+      "description": "Teaches coding agents how to build with Medblocks using the live docs and SDK guidance.",
+      "source": "./medblocks",
+      "strict": false,
+      "skills": [
+        "./best-practices",
+        "./patient-access",
+        "./export-fhir"
+      ]
+    }
+  ]
+}
