@@ -16,9 +16,10 @@ skills/
     SKILL.md
     patient-access.md
     export-fhir.md
+    mcp.md
 ```
 
-`skills/medblocks/` is the portable skill surface. `SKILL.md` is the entrypoint with the stable integration playbook; agents read `patient-access.md` and `export-fhir.md` on demand for task-specific flows. The root `.claude-plugin/marketplace.json` is Claude-specific packaging metadata (the marketplace root itself is the plugin, so there is no separate `plugin.json`).
+`skills/medblocks/` is the portable skill surface. `SKILL.md` is the entrypoint with the stable integration playbook; agents read `patient-access.md`, `export-fhir.md`, and `mcp.md` on demand for task-specific flows. The root `.claude-plugin/marketplace.json` is Claude-specific packaging metadata (the marketplace root itself is the plugin, so there is no separate `plugin.json`).
 
 ## Install (end users, from the public mirror)
 
@@ -46,6 +47,7 @@ cp -r skills/medblocks ~/.claude/skills/medblocks
 - Patient Access docs or `docs/src/lib/prompts.ts` (`patient-access-build`) changes require reviewing `skills/medblocks/patient-access.md`.
 - `/records`, FHIR export, or data-out docs changes require reviewing `skills/medblocks/export-fhir.md`.
 - SDK or API behavior changes require reviewing `skills/medblocks/SKILL.md`.
+- MCP server changes (`src/server/mcp/tools.ts`, the consent scopes, or `docs/content/docs/mcp.mdx`) require reviewing `skills/medblocks/mcp.md`.
 - Keep only stable primitives and semantic rules inlined in the skill. Do not copy full endpoint, parameter, payload, or event references into it; link out for high-churn details.
 - Keep the public skill product-facing. Do not include private Medblocks codebase internals.
 - Mirroring requires the `AGENT_SKILLS_DEPLOY_TOKEN` repo secret (fine-grained PAT with contents write on `medblocks/skills`).

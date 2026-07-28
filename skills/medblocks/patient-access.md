@@ -57,7 +57,7 @@ Core implementation steps:
 3. Redirect the patient to the returned authorization URL.
 4. On return, parse the query with `parseReturnUrl`.
 5. Verify the session server-side with `mb.patientSession.retrieve`.
-6. Inspect connection state with `mb.patients.getConnections`.
+6. Inspect connection state with `mb.patients.retrieve` and read `connections[].status`.
 7. Read records with `mb.patients.records` only when the product flow needs app-controlled reads.
 
 ## Hosted Page Flow
@@ -83,7 +83,11 @@ The return page is a handoff, not the source of truth.
 
 ## Connection Status
 
-Use `mb.patients.getConnections` to inspect patient connections. Treat `connections[].status === "active"` as the connected signal unless the current docs define a newer rule.
+Read connection state from `mb.patients.retrieve(patientId)`. The patient detail response includes `connections[]`, and each connection carries `status` with the values `active`, `failed`, `expired`, `refresh_failed`, or `disconnected`. Treat `active` as the connected signal. `disconnected` means access was revoked. Everything else needs patient remediation.
+
+`mb.patients.getConnections` returns catalog entries (name, logo, portal URL) for rendering, not lifecycle state, and it skips failed connections. Do not read `status` from its results.
+
+To revoke a connection, call `mb.patients.disconnectConnection(patientId, connectionId)` with the `conn_` id from `retrieve(...).connections[]`.
 
 Records may arrive after the connection becomes active. For production record workflows, prefer a webhook or export destination over assuming records are ready immediately on the return page.
 

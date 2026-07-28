@@ -77,6 +77,8 @@ while (true) {
 }
 ```
 
+SDK list endpoints such as `patients.list` also expose `autoPagingIterator()` when the task iterates whole collections rather than record pages.
+
 Keep filters stable across every page in the same read.
 
 ## FHIR Representation Rules
@@ -105,6 +107,8 @@ For non-Patient resources, associate records through FHIR references such as `su
 Use an internal FHIR server or custom FHIR server destination when Medblocks should keep a FHIR endpoint updated for the workspace or downstream system.
 
 Use SDK records when the app needs app-owned storage, custom transformation, immediate on-demand reads, or custom export jobs.
+
+Export to S3 is also available as a destination for file-based pipelines. See https://medblocks.com/docs/export-to-s3.
 
 ## Retries And Triggers
 

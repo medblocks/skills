@@ -13,12 +13,18 @@ This folder contains task guides alongside this file. Read the guide that matche
 | --- | --- |
 | Patient Access: hosted auth, own UI connection flows, patient sessions, return handling, connection status | `patient-access.md` |
 | FHIR records out: read, sync, store, or export records, pagination, Patient identifier mapping, FHIR server destinations | `export-fhir.md` |
+| Live workspace access through an AI assistant: hosted MCP server, OAuth consent, API key clients, safe tool use | `mcp.md` |
 
 The rest of this file is the stable integration playbook that applies to every Medblocks task. Medblocks docs and product behavior move quickly, so verify exact request fields, filters, response fields, and examples against the latest docs and generated API reference before writing code.
 
 - Docs: https://medblocks.com/docs
 - API reference: https://medblocks.com/docs/reference/api
 - API conventions: https://medblocks.com/docs/reference/conventions
+- Sandboxes and synthetic FHIR data: https://medblocks.com/docs/sandboxes
+- Export to S3: https://medblocks.com/docs/export-to-s3
+- Webhooks reference: https://medblocks.com/docs/webhooks
+- Error reference: https://medblocks.com/docs/reference/errors
+- Billing and quotas: https://medblocks.com/docs/billing
 - Local spec for this repo, when present: `openapi/medblocks.json`
 
 ## Source Of Truth
@@ -54,10 +60,15 @@ Core primitives to recognize:
 | Verify a returned session | `mb.patientSession.retrieve(id)` |
 | Read patient connections | `mb.patients.getConnections(id, params?)` |
 | Read FHIR records | `mb.patients.records(id, params?)` |
+| Disconnect a patient connection | `mb.patients.disconnectConnection(patientId, connectionId)` |
 | Verify webhook signature | `Medblocks.webhooks.constructEvent(rawBody, signature, secret)` |
 | Parse Patient Access return URL | `parseReturnUrl(searchParams?)` |
 
 If a task needs more than this, check the docs/API reference for the exact current surface.
+
+## MCP Server
+
+Medblocks also ships a hosted MCP server at `https://app.medblocks.com/mcp` (server name `medblocks-platform`). It is runtime access for AI assistants, not a code path. When the user wants an assistant such as Claude or ChatGPT to operate their live workspace, read `mcp.md` in this folder. When the user wants integration code in their app, stay with the SDK and the guides here. Setup docs live at https://medblocks.com/docs/mcp.
 
 ## Secrets And PHI
 
@@ -84,6 +95,14 @@ while (true) {
 
   if (!page.has_more || !page.next_cursor) break;
   starting_after = page.next_cursor;
+}
+```
+
+List endpoints returned by the SDK (`patients.list`, `patients.listPatientSessions`, `webhooks.list`, `webhooks.listEvents`, `connections.list`) also expose `autoPagingIterator()` for walking every page without cursor bookkeeping.
+
+```ts
+for await (const patient of mb.patients.list({ limit: 100 }).autoPagingIterator()) {
+  // Process patient.
 }
 ```
 
