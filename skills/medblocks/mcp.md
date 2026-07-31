@@ -14,12 +14,12 @@ Setup docs for every client (Claude Code, Codex, ChatGPT, claude.ai) live at htt
 
 ## Tool Surface
 
-The server exposes eight tools. Permissions gate what the assistant may reach.
+The server exposes ten tools. Permissions gate what the assistant may reach.
 
 | Workflow | Tools |
 | --- | --- |
-| Orient in the workspace | `get_workspace_overview`, `list_people` |
-| Find health systems | `search_health_systems` |
+| Orient in the workspace | `get_workspace_overview`, `list_workspaces`, `list_people` |
+| Find health systems | `search_health_systems`, `choose_health_systems` |
 | Connect a patient portal | `connect_health_system`, `check_connection_status` |
 | Read records | `get_health_records` |
 | Remove access or people | `disconnect_health_system`, `delete_person` |
@@ -28,11 +28,15 @@ The server exposes eight tools. Permissions gate what the assistant may reach.
 
 ## Interactive Workflow
 
-1. Start with `get_workspace_overview` to see who the user is and what is set up.
-2. Use `search_health_systems` to find the hospital, clinic, or insurer, and confirm the choice with the user.
-3. Call `connect_health_system` and present the returned URL for the user to open and sign in.
-4. Poll `check_connection_status` with the returned session id after the user says they are done. Records can take a while after a connection becomes active.
-5. Read records with `get_health_records`, filtered by types and since, paginated with the cursor. Avoid pulling everything at once.
+1. Start with `get_workspace_overview` to see who the user is, what is set up, and which health systems were previously connected in the production workspace.
+2. Check `health_system_connections` before asking for provider names. If an active production system exists, mention it and ask whether the user wants to use those records or connect more hospitals. If a connection needs attention, offer to reconnect it. Only ask for provider names when there are no relevant existing connections or the user chooses to connect more.
+3. Never inspect, mention, or suggest a sandbox workspace or sandbox connection unless the user explicitly asks for sandbox or testing. After they do, use `list_workspaces`, select the requested sandbox, and call `get_workspace_overview` with its `workspace_id` before choosing whether to reuse or reconnect.
+4. If the authenticated user's name matches a person, use that person. Otherwise ask whether the records are for the user or someone else, even when the workspace is empty. Use the authenticated name for the user, or ask for the other person's name.
+5. Match that name against `list_people`. Reuse the matching `patient_id`. For a new person, always pass their real name and never invent a placeholder name or id.
+6. Use `choose_health_systems` to find additional hospitals, clinics, or insurers and let the user confirm the selection.
+7. Call `connect_health_system` and present the returned URL for the user to open and sign in.
+8. Check `check_connection_status` with the returned session id after the user says they are done. Records can take a while after a connection becomes active.
+9. Read records with `get_health_records`, filtered by types and since, paginated with the cursor. Avoid pulling everything at once.
 
 ## PHI And External Content
 
