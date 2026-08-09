@@ -34,7 +34,7 @@ The server exposes ten tools. Permissions gate what the assistant may reach.
 4. If the authenticated user's name matches a person, use that person. Otherwise ask whether the records are for the user or someone else, even when the workspace is empty. Use the authenticated name for the user, or ask for the other person's name.
 5. Match that name against `list_people`. Reuse the matching `patient_id`. For a new person, always pass their real name and never invent a placeholder name or id.
 6. Use `choose_health_systems` to find additional hospitals, clinics, or insurers and let the user confirm the selection.
-7. Call `connect_health_system` and present the returned URL for the user to open and sign in.
+7. Call `connect_health_system`, which creates the person when the real name is new and starts a private connection session. Present the returned URL for the user to open and sign in.
 8. Check `check_connection_status` with the returned session id after the user says they are done. Records can take a while after a connection becomes active.
 9. Read records with `get_health_records`, filtered by types and since, paginated with the cursor. Avoid pulling everything at once.
 
