@@ -58,7 +58,7 @@ Core primitives to recognize:
 | --- | --- |
 | Start patient authorization | `mb.patientSession.init(input)` |
 | Verify a returned session | `mb.patientSession.retrieve(id)` |
-| Read patient connections | `mb.patients.getConnections(id, params?)` |
+| Read patient connections | `mb.patients.retrieve(id)` → `connections[]` |
 | Read FHIR records | `mb.patients.records(id, params?)` |
 | Disconnect a patient connection | `mb.patients.disconnectConnection(patientId, connectionId)` |
 | Verify webhook signature | `Medblocks.webhooks.constructEvent(rawBody, signature, secret)` |

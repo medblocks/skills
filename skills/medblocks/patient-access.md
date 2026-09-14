@@ -85,7 +85,7 @@ The return page is a handoff, not the source of truth.
 
 Read connection state from `mb.patients.retrieve(patientId)`. The patient detail response includes `connections[]`, and each connection carries `status` with the values `active`, `failed`, `expired`, `refresh_failed`, or `disconnected`. Treat `active` as the connected signal. `disconnected` means access was revoked. Everything else needs patient remediation.
 
-`mb.patients.getConnections` returns catalog entries (name, logo, portal URL) for rendering, not lifecycle state, and it skips failed connections. Do not read `status` from its results.
+Each `connections[]` entry contains the source EHR as `.facility` (`name`, `type`, `fhir_base_url`, `logo_url`, `portal_url`), so read the facility name, logo, or portal URL directly from the same response.
 
 To revoke a connection, call `mb.patients.disconnectConnection(patientId, connectionId)` with the `conn_` id from `retrieve(...).connections[]`.
 
